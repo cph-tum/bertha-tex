@@ -1,0 +1,16 @@
+stages:
+  - build
+
+build:latex:
+  image: cphtum/debian-cmake-texlive:latest
+  stage: build
+  before_script:
+    - tlmgr --version
+  script:
+    - mkdir -p build
+    - cd build
+    - cmake ..
+    - make
+  artifacts:
+    paths:
+      - "build/*.pdf"
