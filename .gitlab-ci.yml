@@ -1,5 +1,6 @@
 stages:
   - build
+  - format
 
 build:latex:
   image: cphtum/debian-cmake-texlive:latest
@@ -14,3 +15,44 @@ build:latex:
   artifacts:
     paths:
       - "build/*.pdf"
+
+format:latex:
+  image: cphtum/debian-cmake-texlive:latest
+  stage: format
+  before_script:
+    - tlmgr --version
+  script:
+    - mkdir -p build
+    - cd build
+    - cmake ..
+    - make check_format_latex
+  artifacts:
+    when: on_failure
+    paths:
+      - "build/format/format_latex_revisionlist.txt"
+
+format:cmake:
+  image: cphtum/debian-cmake-texlive:latest
+  stage: format
+  variables:
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  cache:
+    paths:
+      - .cache/pip
+      - venv/
+  before_script:
+    - apt-get install python3-pip -y
+    - python3 -V
+    - pip3 install virtualenv
+    - virtualenv venv
+    - source venv/bin/activate
+    - pip install cmake_format[YAML]
+  script:
+    - mkdir -p build
+    - cd build
+    - cmake ..
+    - make check_format_cmake
+  artifacts:
+    when: on_failure
+    paths:
+      - "build/format/format_cmake_revisionlist.txt"
