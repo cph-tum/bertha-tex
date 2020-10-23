@@ -15,7 +15,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 cmake_minimum_required(VERSION 3.9)
 
 # project information
@@ -29,11 +28,16 @@ set(VERSION_PATCH 0)
 set(VERSION_PRRLS "")
 set(VERSION_CORE "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 set(VERSION_FULL "${VERSION_CORE}${VERSION_PRRLS}")
-project(${PROJECT} VERSION ${VERSION_CORE} LANGUAGES NONE)
 
-# require CMake UseLATEX package
+project(${PROJECT}
+        VERSION ${VERSION_CORE}
+        LANGUAGES NONE
+)
+
+# require CMake UseLATEX package and format packages
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 include(UseLATEX)
+include(FormatBERTHA)
 
 # add LaTeX documents
 add_latex_document(

@@ -1,0 +1,170 @@
+## format_latex_settings.yaml
+## Copyright (C) 2019 The LaTeX4EI Team
+#
+# This work may be distributed and/or modified under the
+# conditions of the LaTeX Project Public License, either version 1.3
+# of this license or (at your option) any later version.
+# The latest version of this license is in
+# http://www.latex-project.org/lppl.txt
+# and version 1.3 or later is part of all distributions of LaTeX
+# version 2005/12/01 or later.
+#
+# Configuration file for latexindent
+#
+
+# settings for indentation
+
+# keep only one backup file and overwrite it on next call
+onlyOneBackUp: 1
+# default indentation is 2 spaces
+defaultIndent: '  '
+# remove trailing whitespaces in every line both before and after processing
+removeTrailingWhitespace:
+  beforeProcessing: 1
+  afterProcessing: 1
+# apply indentation also in preamble
+indentPreamble: 1
+preambleCommandsBeforeEnvironments: 1
+
+# verbatim environments and commands which shouldn't be indented
+verbatimEnvironments:
+  verbatim: 1
+  lstlisting: 1
+  listing: 1
+  minted: 1
+verbatimCommands:
+  verb: 1
+  lstinline: 1
+  mintinline: 1
+
+# special comment block to avoid indentation
+# use '% \begin{noindent}' and '% \end{noindent}' in latex files
+noIndentBlock:
+  noindent: 1
+
+# indentation rules for environments with align delimiters
+lookForAlignDelims:
+  tabular:
+    delims: 1                       # enable indent settings
+    spacesBeforeAmpersand: 1        # define spaces before and
+    spacesAfterAmpersand: 1         # after & symol
+    justification: 'left'           # align columns left
+    alignDoubleBackSlash: 1         # align also linebreak symbols
+    spacesBeforeDoubleBackSlash: 1  # define spaces before \\
+    multiColumnGrouping: 1          # both lines needed for correct
+    alignRowsWithoutMaxDelims: 1    # \multicolumn{}{}{} grouping
+  tabularx: 1
+  tabulary: 1
+  align: 1
+  align*: 1
+  alignat: 1
+  alignat*: 1
+  cases: 1
+  dcases: 1
+  array: 1
+  matrix: 1
+
+# list environments which should be indented
+indentAfterItems:
+  itemize: 1
+  enumerate: 1
+  description: 1
+  tcbitemize: 1
+# list of item commands within list environments
+itemNames:
+  item: 1
+  tcbitem: 1
+
+# indentation rules for environments with spetial begin and end commands
+specialBeginEnd:
+  specialBeforeCommand: 1  # treat specialBeginEnds before other commands
+  ifcaseOrElse:
+    begin: '\\ifcase' # begin command
+    middle:           # middle command(s)
+      - '\\or'
+      - '\\else'
+    end: '\\fi'       # end command
+    lookForThis: 1    # enable this specialBeginEnd
+  leftrightParen:
+    begin: '\\left\('
+    end: '\\right\)'
+    lookForThis: 1
+  leftrightBrackets:
+    begin: '\\left\['
+    end: '\\right\]'
+    lookForThis: 1
+  leftrightBraces:
+    begin: '\\left\{'
+    end: '\\right\}'
+    lookForThis: 1
+
+# indentation rules on a per environment/command basis
+noAdditionalIndent:
+  document: 1
+  comment: 1
+indentRules:
+  item: 0       # needed because global rule should apply
+  path: '  '
+  node:
+    body: '  '
+    optionalArguments: '  '
+    mandatoryArguments: '  '
+
+# global indentation rules (fallback)
+# the following two list should be complementary
+noAdditionalIndentGlobal:
+  environments: 0                     # indent within environments
+  commands: 1                         # don't indent after regular commands
+  optionalArguments: 0                # indent optional arguments []
+  mandatoryArguments: 0               # indent mandatory arguments {}
+  keyEqualsValuesBracesBrackets: 0    # indent key-value lists
+  namedGroupingBracesBrackets: 1      # don't indent grouped []{}
+  UnNamedGroupingBracesBrackets: 1
+  ifElseFi: 0                         # indent \if\else\fi blocks
+  afterHeading: 1                     # no indent after sectioning commands
+  specialBeginEnd: 0                  # indent between special begin and end
+  items: 0                            # indent after item commands
+indentRulesGlobal:
+  environments: '  '
+  commands: 0
+  optionalArguments: '  '
+  mandatoryArguments: '  '
+  keyEqualsValuesBracesBrackets: '  '
+  namedGroupingBracesBrackets: 0
+  UnNamedGroupingBracesBrackets: 0
+  ifElseFi: '  '
+  afterHeading: 0
+  specialBeginEnd: '  '
+  items: '  '
+
+# define special strings which are treated as parts of commands
+# specially useful for proper TikZ support
+commandCodeBlocks:
+  roundedParenthesesAllowed: 1      # allow arguments in round parentheses
+  stringsAllowedBetweenArguments:
+    -
+      amalgamate: 0     # don't combine this list with default list
+    - 'at'
+    - 'to'
+    - 'node'
+    - 'in'
+    - '\+\+'
+    - '\-\-'
+    - 'rectangle'
+    - 'circle'
+    - 'ellipse'
+    - 'cos'
+    - 'sin'
+  commandNameSpecial:
+    -
+      amalgamate: 0
+    - '@ifnextchar\['
+
+# settings for automatic line breaks (-m switch)
+modifyLineBreaks:
+  preserveBlankLines: 1
+  condenseMultipleBlankLinesInto: 2
+
+  textWrapOptions:
+    columns: 78
+    perCodeBlockBasis: 1
