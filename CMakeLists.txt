@@ -1,7 +1,7 @@
 #
 # bertha-tex: Project skeleton for scientific writing in LaTeX.
 #
-# Copyright 2020 Michael Haider <michael.haider@tum.de>
+# Copyright 2021 Michael Haider <michael.haider@tum.de>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ cmake_minimum_required(VERSION 3.9)
 # project information
 set(PROJECT "bertha-tex")
 set(PROJECT_AUTHOR "Michael Haider")
-set(PROJECT_EMAIL "michael.haiderh@tum.de")
+set(PROJECT_EMAIL "michael.haider@tum.de")
 set(PROJECT_URL "https://www.gitlab.com/cph-tum/bertha-tex")
 set(VERSION_MAJOR 1)
 set(VERSION_MINOR 0)

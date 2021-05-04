@@ -1,7 +1,7 @@
 #
 # bertha-tex: Project skeleton for scientific writing in LaTeX.
 #
-# Copyright 2020 Michael Haider <michael.haider@tum.de>
+# Copyright 2021 Michael Haider <michael.haider@tum.de>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,8 +31,8 @@ find_program(LATEXINDENT_EXECUTABLE latexindent REQUIRED)
 find_package(Git REQUIRED)
 
 # find format LaTeX settings
-find_file(format_latex_settings "format_latex_settings.yaml" PATH
-          ${PROJECT_SOURCE_DIR}/cmake REQUIRED
+find_file(format_latex_settings "format_latex_settings.yaml"
+          PATHS ${PROJECT_SOURCE_DIR}/cmake REQUIRED
 )
 
 # get list of all LaTeX files
@@ -40,6 +40,7 @@ file(GLOB_RECURSE latex_files *.cls *.sty *.tex)
 
 # format source files only
 list(FILTER latex_files EXCLUDE REGEX "${PROJECT_BINARY_DIR}/*.*")
+list(FILTER latex_files EXCLUDE REGEX "${PROJECT_SOURCE_DIR}/templates/*")
 
 # add target "format_latex"
 add_custom_target(format_latex)
@@ -57,11 +58,8 @@ foreach(file ${latex_files})
 endforeach()
 
 # add target "check_format_latex"
-add_custom_target(check_format_latex DEPENDS "${LATEX_REVISION_FILE}")
-
-# check format of all LaTeX files using "git diff"
-add_custom_command(
-  OUTPUT "${LATEX_REVISION_FILE}"
+add_custom_target(
+  check_format_latex
   COMMENT "Checking format of LaTeX files"
   COMMAND "${GIT_EXECUTABLE}" diff --exit-code
           --output="${LATEX_REVISION_FILE}"

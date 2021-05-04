@@ -1,7 +1,7 @@
 #
 # bertha-tex: Project skeleton for scientific writing in LaTeX.
 #
-# Copyright 2020 Michael Haider <michael.haider@tum.de>
+# Copyright 2021 Michael Haider <michael.haider@tum.de>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,8 +31,8 @@ find_program(CMAKE-FORMAT_EXECUTABLE cmake-format REQUIRED)
 find_package(Git REQUIRED)
 
 # find format CMake settings
-find_file(format_cmake_settings "format_cmake_settings.yaml" PATH
-          ${PROJECT_SOURCE_DIR}/cmake REQUIRED
+find_file(format_cmake_settings "format_cmake_settings.yaml"
+          PATHS ${PROJECT_SOURCE_DIR}/cmake REQUIRED
 )
 
 # get list of all CMake files
@@ -40,6 +40,7 @@ file(GLOB_RECURSE cmake_files *.cmake CMakeLists.txt)
 
 # format source files only
 list(FILTER cmake_files EXCLUDE REGEX "${PROJECT_BINARY_DIR}/*.*")
+list(FILTER cmake_files EXCLUDE REGEX "${PROJECT_SOURCE_DIR}/templates/*")
 
 # add target "format_cmake"
 add_custom_target(format_cmake)
@@ -56,11 +57,8 @@ foreach(file ${cmake_files})
 endforeach()
 
 # add target "check_format_cmake"
-add_custom_target(check_format_cmake DEPENDS "${CMAKE_REVISION_FILE}")
-
-# check format of all CMake files using "git diff"
-add_custom_command(
-  OUTPUT "${CMAKE_REVISION_FILE}"
+add_custom_target(
+  check_format_cmake
   COMMENT "Checking format of CMake files"
   COMMAND "${GIT_EXECUTABLE}" diff --exit-code
           --output="${CMAKE_REVISION_FILE}"
